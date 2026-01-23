@@ -4,10 +4,10 @@ package interfaces;
  * Progressable interface for entities that can gain experience and level up
  */
 
-public class Progressable {
+public interface Progressable {
     /**
      * Gain experience points
-     * @param Xp amount of experience to gain
+     * @param xp amount of experience to gain
      */
     void gainExperience(int xp);
 
