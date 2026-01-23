@@ -25,9 +25,7 @@ public class GuildController {
         this.scanner = scanner;
     }
 
-    /**
-     * CREATE - Create a new guild
-     */
+
     public void createGuild() {
         try {
             System.out.println("\n========== CREATE GUILD ==========");
@@ -51,9 +49,6 @@ public class GuildController {
         }
     }
 
-    /**
-     * READ - Get all guilds
-     */
     public void getAllGuilds() {
         try {
             System.out.println("\n========== ALL GUILDS ==========");
@@ -77,9 +72,7 @@ public class GuildController {
         }
     }
 
-    /**
-     * READ - Get guild by ID
-     */
+
     public void getGuildById() {
         try {
             System.out.print("\nEnter guild ID: ");
@@ -234,9 +227,7 @@ public class GuildController {
         }
     }
 
-    /**
-     * Level up guild
-     */
+
     public void levelUpGuild() {
         try {
             System.out.print("\nEnter guild ID to level up: ");
@@ -259,9 +250,6 @@ public class GuildController {
         }
     }
 
-    /**
-     * Show guild statistics
-     */
     public void showGuildStatistics() {
         try {
             System.out.println("\n========== GUILD STATISTICS ==========");
@@ -315,9 +303,7 @@ public class GuildController {
         }
     }
 
-    /**
-     * View guild members (requires joining with characters table)
-     */
+
     public void viewGuildMembers() {
         try {
             System.out.print("\nEnter guild ID: ");

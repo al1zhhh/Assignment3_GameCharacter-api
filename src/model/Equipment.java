@@ -1,18 +1,14 @@
 package model;
 
-/**
- * Equipment class - used in composition with Character
- * Demonstrates has-a relationship
- */
+
 public class Equipment {
     private int id;
     private String name;
-    private String equipmentType; // WEAPON, ARMOR, ACCESSORY
+    private String equipmentType;
     private String bonusStats;
-    private String rarity; // COMMON, RARE, EPIC, LEGENDARY
+    private String rarity;
     private int characterId;
 
-    // Constructor for new equipment
     public Equipment(String name, String equipmentType, String bonusStats, String rarity) {
         setName(name);
         setEquipmentType(equipmentType);
@@ -40,7 +36,7 @@ public class Equipment {
         System.out.println("=================================");
     }
 
-    // Validation
+
     public void setName(String name) {
         if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException("Equipment name cannot be empty");
@@ -64,7 +60,6 @@ public class Equipment {
         this.rarity = rarity;
     }
 
-    // Getters and Setters
     public int getId() {
         return id;
     }

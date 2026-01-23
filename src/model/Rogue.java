@@ -10,7 +10,6 @@ public class Rogue extends GameEntity implements Combatant, Progressable {
     private int stealth;
     private double criticalChance;
 
-    // Constructor for new rogues
     public Rogue(String name, int level, int agility, int stealth, double criticalChance) {
         super(name, level);
         setAgility(agility);
@@ -18,7 +17,7 @@ public class Rogue extends GameEntity implements Combatant, Progressable {
         setCriticalChance(criticalChance);
     }
 
-    // Constructor for database loading
+
     public Rogue(int id, String name, int level, int experience, LocalDateTime createdDate,
                  int agility, int stealth, double criticalChance) {
         super(id, name, level, experience, createdDate);
@@ -77,7 +76,6 @@ public class Rogue extends GameEntity implements Combatant, Progressable {
         return (int)(agility * 2 * (1 + criticalChance) + getLevel());
     }
 
-    // Progressable interface implementation
     @Override
     public void gainExperience(int xp) {
         if (xp <= 0) {
@@ -97,7 +95,7 @@ public class Rogue extends GameEntity implements Combatant, Progressable {
         return getExperience() >= requiredXP;
     }
 
-    // Validation in setters
+
     public void setAgility(int agility) {
         if (agility <= 0) {
             throw new IllegalArgumentException("Agility must be greater than 0");
@@ -119,7 +117,6 @@ public class Rogue extends GameEntity implements Combatant, Progressable {
         this.criticalChance = criticalChance;
     }
 
-    // Getters
     public int getAgility() {
         return agility;
     }

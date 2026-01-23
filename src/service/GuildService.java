@@ -10,9 +10,7 @@ import java.sql.*;
 import utils.DatabaseConnection;
 import java.util.List;
 
-/**
- * Service layer for Guild - handles business logic and validation
- */
+
 public class GuildService {
     private GuildRepository guildRepository;
     private CharacterRepository characterRepository;
@@ -22,14 +20,11 @@ public class GuildService {
         this.characterRepository = new CharacterRepository();
     }
 
-    /**
-     * Create a new guild with validation
-     */
+
     public int createGuild(Guild guild) throws InvalidInputException, DatabaseOperationException {
-        // Validation
+
         validateGuild(guild);
 
-        // Check for duplicate name
         try {
             List<Guild> existingGuilds = guildRepository.getAll();
             for (Guild existing : existingGuilds) {
@@ -44,16 +39,12 @@ public class GuildService {
         return guildRepository.create(guild);
     }
 
-    /**
-     * Get all guilds
-     */
+
     public List<Guild> getAllGuilds() throws DatabaseOperationException {
         return guildRepository.getAll();
     }
 
-    /**
-     * Get guild by ID
-     */
+
     public Guild getGuildById(int id) throws DatabaseOperationException, ResourceNotFoundException {
         if (id <= 0) {
             throw new ResourceNotFoundException("Invalid guild ID: " + id);
@@ -61,30 +52,23 @@ public class GuildService {
         return guildRepository.getById(id);
     }
 
-    /**
-     * Update guild with validation
-     */
+
     public void updateGuild(int id, Guild guild) throws InvalidInputException, DatabaseOperationException, ResourceNotFoundException {
         validateGuild(guild);
         guildRepository.update(id, guild);
     }
 
-    /**
-     * Delete guild (business rule: must have no members)
-     */
+
     public void deleteGuild(int id) throws DatabaseOperationException, ResourceNotFoundException {
         guildRepository.delete(id);
     }
 
-    /**
-     * Add character to guild
-     */
+
     public void addCharacterToGuild(int characterId, int guildId) throws DatabaseOperationException, ResourceNotFoundException {
-        // Validate both exist
         GameEntity character = characterRepository.getById(characterId);
         Guild guild = guildRepository.getById(guildId);
 
-        // Update character's guild_id
+
         String sql = "UPDATE characters SET guild_id = ? WHERE id = ?";
         Connection conn = null;
         PreparedStatement ps = null;
@@ -96,7 +80,7 @@ public class GuildService {
             ps.setInt(2, characterId);
             ps.executeUpdate();
 
-            // Increment guild member count
+
             guild.addMember();
             guildRepository.update(guildId, guild);
 

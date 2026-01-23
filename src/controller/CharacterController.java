@@ -9,10 +9,7 @@ import exceptions.*;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * Controller layer for Character operations
- * Handles user input/output and delegates to service layer
- */
+
 public class CharacterController {
     private CharacterService characterService;
     private Scanner scanner;
@@ -27,9 +24,7 @@ public class CharacterController {
         this.scanner = scanner;
     }
 
-    /**
-     * CREATE - Create a new character
-     */
+
     public void createCharacter() {
         try {
             System.out.println("\n========== CREATE CHARACTER ==========");
@@ -81,9 +76,7 @@ public class CharacterController {
         }
     }
 
-    /**
-     * Helper method to create Warrior
-     */
+
     private Warrior createWarrior(String name, int level) {
         System.out.println("\n--- Warrior Stats ---");
         System.out.print("Strength (1-100): ");
@@ -99,9 +92,7 @@ public class CharacterController {
         return new Warrior(name, level, strength, armor, weaponType);
     }
 
-    /**
-     * Helper method to create Mage
-     */
+
     private Mage createMage(String name, int level) {
         System.out.println("\n--- Mage Stats ---");
         System.out.print("Mana (1-500): ");
@@ -117,9 +108,7 @@ public class CharacterController {
         return new Mage(name, level, mana, intelligence, spellSchool);
     }
 
-    /**
-     * Helper method to create Rogue
-     */
+
     private Rogue createRogue(String name, int level) {
         System.out.println("\n--- Rogue Stats ---");
         System.out.print("Agility (1-100): ");
@@ -135,9 +124,7 @@ public class CharacterController {
         return new Rogue(name, level, agility, stealth, criticalChance);
     }
 
-    /**
-     * READ - Get all characters
-     */
+
     public void getAllCharacters() {
         try {
             System.out.println("\n========== ALL CHARACTERS ==========");
@@ -161,9 +148,7 @@ public class CharacterController {
         }
     }
 
-    /**
-     * READ - Get character by ID
-     */
+
     public void getCharacterById() {
         try {
             System.out.print("\nEnter character ID: ");
@@ -192,9 +177,7 @@ public class CharacterController {
         }
     }
 
-    /**
-     * UPDATE - Update character
-     */
+
     public void updateCharacter() {
         try {
             System.out.print("\nEnter character ID to update: ");
@@ -307,9 +290,7 @@ public class CharacterController {
         scanner.nextLine();
     }
 
-    /**
-     * DELETE - Delete character
-     */
+
     public void deleteCharacter() {
         try {
             System.out.print("\nEnter character ID to delete: ");
@@ -340,9 +321,6 @@ public class CharacterController {
         }
     }
 
-    /**
-     * Add experience to character (Progressable interface)
-     */
     public void addExperience() {
         try {
             System.out.print("\nEnter character ID: ");
@@ -371,9 +349,7 @@ public class CharacterController {
         }
     }
 
-    /**
-     * Level up character manually
-     */
+
     public void levelUpCharacter() {
         try {
             System.out.print("\nEnter character ID to level up: ");
@@ -383,7 +359,6 @@ public class CharacterController {
             System.out.println("\n========== LEVELING UP ==========");
             characterService.levelUpCharacter(id);
 
-            // Show updated character
             GameEntity character = characterService.getCharacterById(id);
             character.displayInfo();
 
@@ -396,9 +371,6 @@ public class CharacterController {
         }
     }
 
-    /**
-     * Simulate combat between two characters (Combatant interface)
-     */
     public void simulateCombat() {
         try {
             System.out.println("\n========== COMBAT SIMULATION ==========");
@@ -425,9 +397,7 @@ public class CharacterController {
         }
     }
 
-    /**
-     * Demonstrate polymorphism
-     */
+
     public void demonstratePolymorphism() {
         try {
             System.out.println("\n========== POLYMORPHISM DEMONSTRATION ==========");
@@ -440,9 +410,6 @@ public class CharacterController {
         }
     }
 
-    /**
-     * Get characters by type (demonstrates filtering)
-     */
     public void getCharactersByType() {
         try {
             System.out.println("\n========== FILTER BY TYPE ==========");
@@ -488,9 +455,7 @@ public class CharacterController {
         }
     }
 
-    /**
-     * Show character statistics
-     */
+
     public void showStatistics() {
         try {
             System.out.println("\n========== CHARACTER STATISTICS ==========");

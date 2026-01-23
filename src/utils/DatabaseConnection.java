@@ -4,26 +4,19 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-/**
- * DatabaseConnection utility class for PostgreSQL
- * Manages JDBC connection to PostgreSQL database
- */
+
 public class DatabaseConnection {
     // PostgreSQL connection parameters
     private static final String HOST = "localhost";
-    private static final String PORT = "5432";  // Default PostgreSQL port
+    private static final String PORT = "5432";
     private static final String DATABASE = "game_character_db";
     private static final String URL = "jdbc:postgresql://" + HOST + ":" + PORT + "/" + DATABASE;
-    private static final String USER = "game_user";  // Default PostgreSQL user
-    private static final String PASSWORD = "Ti4NtEhI";  // CHANGE THIS!
+    private static final String USER = "game_user";
+    private static final String PASSWORD = "Ti4NtEhI";
 
     private static Connection connection = null;
 
-    /**
-     * Get database connection (Singleton pattern)
-     * @return Connection object
-     * @throws SQLException if connection fails
-     */
+
     public static Connection getConnection() throws SQLException {
         if (connection == null || connection.isClosed()) {
             try {
@@ -45,9 +38,7 @@ public class DatabaseConnection {
         return connection;
     }
 
-    /**
-     * Close database connection
-     */
+
     public static void closeConnection() {
         if (connection != null) {
             try {
@@ -59,17 +50,13 @@ public class DatabaseConnection {
         }
     }
 
-    /**
-     * Test database connection
-     * @return true if connection successful, false otherwise
-     */
     public static boolean testConnection() {
         try {
             Connection conn = getConnection();
             boolean isValid = conn != null && !conn.isClosed();
 
             if (isValid) {
-                // Additional check: try to execute a simple query
+
                 var statement = conn.createStatement();
                 var rs = statement.executeQuery("SELECT version()");
                 if (rs.next()) {
@@ -93,10 +80,7 @@ public class DatabaseConnection {
         }
     }
 
-    /**
-     * Get connection URL for debugging
-     * @return connection URL string
-     */
+
     public static String getConnectionURL() {
         return URL;
     }

@@ -8,9 +8,7 @@ import exceptions.*;
 
 import java.util.List;
 
-/**
- * Service layer for Character - handles business logic and validation
- */
+
 public class CharacterService {
     private CharacterRepository characterRepository;
 
@@ -18,9 +16,7 @@ public class CharacterService {
         this.characterRepository = new CharacterRepository();
     }
 
-    /**
-     * Create a new character with validation
-     */
+
     public int createCharacter(GameEntity character) throws InvalidInputException, DatabaseOperationException {
         // Validation
         validateCharacter(character);
@@ -58,33 +54,25 @@ public class CharacterService {
         return characterRepository.getById(id);
     }
 
-    /**
-     * Update character with validation
-     */
+
     public void updateCharacter(int id, GameEntity character) throws InvalidInputException, DatabaseOperationException, ResourceNotFoundException {
         validateCharacter(character);
         characterRepository.update(id, character);
     }
 
-    /**
-     * Delete character
-     */
+
     public void deleteCharacter(int id) throws DatabaseOperationException, ResourceNotFoundException {
         characterRepository.delete(id);
     }
 
-    /**
-     * Level up a character
-     */
+
     public void levelUpCharacter(int id) throws DatabaseOperationException, ResourceNotFoundException {
         GameEntity character = characterRepository.getById(id);
         character.levelUp();
         characterRepository.update(id, character);
     }
 
-    /**
-     * Add experience to character
-     */
+
     public void addExperience(int id, int xp) throws InvalidInputException, DatabaseOperationException, ResourceNotFoundException {
         if (xp <= 0) {
             throw new InvalidInputException("Experience points must be positive");
@@ -98,9 +86,7 @@ public class CharacterService {
         }
     }
 
-    /**
-     * Demonstrate polymorphism - calculate power for all characters
-     */
+
     public void demonstratePolymorphism() throws DatabaseOperationException {
         List<GameEntity> characters = characterRepository.getAll();
 
@@ -113,9 +99,7 @@ public class CharacterService {
         }
     }
 
-    /**
-     * Demonstrate interface usage - combat simulation
-     */
+
     public void demonstrateCombat(int attackerId, int defenderId) throws DatabaseOperationException, ResourceNotFoundException {
         GameEntity attacker = characterRepository.getById(attackerId);
         GameEntity defender = characterRepository.getById(defenderId);
@@ -133,9 +117,7 @@ public class CharacterService {
         }
     }
 
-    /**
-     * Validate character data
-     */
+
     private void validateCharacter(GameEntity character) throws InvalidInputException {
         if (character == null) {
             throw new InvalidInputException("Character cannot be null");
