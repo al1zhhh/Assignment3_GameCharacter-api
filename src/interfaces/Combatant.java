@@ -1,6 +1,6 @@
 package interfaces;
 
-public class Combatant {
+public interface Combatant {
     /**
      * Perform an attack action
      * @return damage dealt
