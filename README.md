@@ -122,46 +122,6 @@ Custom exception hierarchy:
 - `ResourceNotFoundException` - When entity doesn't exist
 - `DatabaseOperationException` - For database errors
 
-## Installation and Setup
-
-### Prerequisites
-- Java JDK 11+
-- PostgreSQL 12+
-- IntelliJ IDEA (or any Java IDE)
-- PostgreSQL JDBC Driver
-
-### Step 1: Install PostgreSQL
-Download and install from https://www.postgresql.org/download/
-
-### Step 2: Create Database
-1. Open pgAdmin4
-2. Right-click on Databases → Create → Database
-3. Name: `game_character_db`
-4. Click Save
-
-### Step 3: Run Schema
-1. Select `game_character_db`
-2. Tools → Query Tool
-3. Open `resources/schema_postgres.sql`
-4. Execute the script (F5)
-
-### Step 4: Configure Connection
-Edit `src/utils/DatabaseConnection.java`:
-```java
-private static final String PASSWORD = "your_password"; // Change this
-```
-
-### Step 5: Add PostgreSQL Driver
-In IntelliJ IDEA:
-1. File → Project Structure → Libraries
-2. Click + → From Maven
-3. Enter: `org.postgresql:postgresql:42.6.0`
-4. Click OK
-
-### Step 6: Run the Application
-1. Open `Main.java`
-2. Click the green play button ▶
-3. Use the console menu to interact
 
 ## How to Use
 
