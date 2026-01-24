@@ -3,10 +3,13 @@ package controller;
 import interfaces.Combatant;
 import interfaces.Progressable;
 import model.*;
+import repository.CharacterRepository;
 import service.CharacterService;
 import exceptions.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 
@@ -423,9 +426,15 @@ public class CharacterController {
 
             String type = "";
             switch (choice) {
-                case 1: type = "WARRIOR"; break;
-                case 2: type = "MAGE"; break;
-                case 3: type = "ROGUE"; break;
+                case 1:
+                    type = "WARRIOR";
+                    break;
+                case 2:
+                    type = "MAGE";
+                    break;
+                case 3:
+                    type = "ROGUE";
+                    break;
                 default:
                     System.out.println("Invalid choice!");
                     return;
@@ -474,9 +483,15 @@ public class CharacterController {
             for (GameEntity character : characters) {
                 // Count by type
                 switch (character.getCharacterType()) {
-                    case "WARRIOR": warriorCount++; break;
-                    case "MAGE": mageCount++; break;
-                    case "ROGUE": rogueCount++; break;
+                    case "WARRIOR":
+                        warriorCount++;
+                        break;
+                    case "MAGE":
+                        mageCount++;
+                        break;
+                    case "ROGUE":
+                        rogueCount++;
+                        break;
                 }
 
                 // Calculate stats
@@ -506,3 +521,4 @@ public class CharacterController {
         }
     }
 }
+

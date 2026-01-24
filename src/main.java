@@ -1,11 +1,15 @@
 import controller.CharacterController;
 import controller.GuildController;
+import interfaces.Progressable;
 import model.*;
 import service.CharacterService;
 import service.GuildService;
 import exceptions.*;
 import utils.DatabaseConnection;
+import utils.ReflectionUtils;
+import utils.SortingUtils;
 
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -122,6 +126,7 @@ public class main {
                     // Demonstrations
                     case 20: characterController.simulateCombat(); break;
                     case 21: characterController.demonstratePolymorphism(); break;
+                    case 22: demonstrateAdvancedFeatures(); break;
 
 
                     case 0:
@@ -144,8 +149,65 @@ public class main {
     }
 
     /**
-     * Automated demonstration of all features
+     * Demonstrate Advanced OOP Features
      */
+    private static void demonstrateAdvancedFeatures() {
+        System.out.println("\n╔════════════════════════════════════════════════════╗");
+        System.out.println("║     ADVANCED OOP FEATURES DEMONSTRATION            ║");
+        System.out.println("╚════════════════════════════════════════════════════╝\n");
+
+        try {
+            // 1. REFLECTION
+            System.out.println("┌─ REFLECTION (RTTI) ────────────────────────────────┐");
+            Warrior warrior = new Warrior("TestWarrior", 10, 50, 30, "Sword");
+            ReflectionUtils.inspectObject(warrior);
+            ReflectionUtils.printClassHierarchy(warrior);
+            System.out.println("└────────────────────────────────────────────────────┘\n");
+
+            pause();
+
+            // 2. LAMBDAS - Sorting
+            System.out.println("┌─ LAMBDAS - Sorting ────────────────────────────────┐");
+            List<GameEntity> characters = characterService.getAllCharacters();
+
+            System.out.println("Original order:");
+            characters.forEach(c -> System.out.println("  " + c.getName() + " - Level " + c.getLevel()));
+
+            System.out.println("\nSorted by name (Lambda):");
+            SortingUtils.sortByName(characters);
+            characters.forEach(c -> System.out.println("  " + c.getName()));
+
+            System.out.println("\nSorted by power (Lambda):");
+            SortingUtils.sortByPowerDesc(characters);
+            characters.forEach(c -> System.out.println("  " + c.getName() + " - Power: " + c.calculatePower()));
+            System.out.println("└────────────────────────────────────────────────────┘\n");
+
+            pause();
+
+            // 3. GENERICS
+            System.out.println("┌─ GENERICS - CrudRepository<T> ─────────────────────┐");
+            System.out.println("CharacterRepository implements CrudRepository<GameEntity>");
+            System.out.println("This allows type-safe CRUD operations for any entity type");
+            System.out.println("└────────────────────────────────────────────────────┘\n");
+
+            pause();
+
+            // 4. INTERFACE DEFAULT/STATIC METHODS
+            System.out.println("┌─ INTERFACE Default/Static Methods ────────────────┐");
+            System.out.println("Max Level (static method): " + Progressable.getMaxLevel());
+            System.out.println("Is level 50 valid? " + Progressable.isValidLevel(50));
+            System.out.println("Is level 150 valid? " + Progressable.isValidLevel(150));
+
+            if (warrior instanceof Progressable) {
+                Progressable prog = (Progressable) warrior;
+                System.out.println("Required XP for level 10 (default method): " + prog.calculateRequiredXP(10));
+            }
+            System.out.println("└────────────────────────────────────────────────────┘\n");
+
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+    }
 
     private static void pause() {
         System.out.println("Press Enter to continue...");

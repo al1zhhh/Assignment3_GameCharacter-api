@@ -1,19 +1,18 @@
 package interfaces;
 
-/**
- * Progressable interface for entities that can gain experience and level up
- */
-
 public interface Progressable {
-    /**
-     * Gain experience points
-     * @param xp amount of experience to gain
-     */
-    void gainExperience(int xp);
 
-    /**
-     * Check if entity can level up
-     * @return true if enough experience for next level
-     */
+    void gainExperience(int xp);
     boolean canLevelUp();
+
+    default int calculateRequiredXP(int level) {
+        return level * 1000;  // Default formula
+    }
+    static int getMaxLevel() {
+        return 100;
+    }
+
+    static boolean isValidLevel(int level) {
+        return level >= 1 && level <= getMaxLevel();
+    }
 }

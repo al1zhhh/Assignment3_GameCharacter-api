@@ -1,6 +1,7 @@
 package repository;
 
 import model.*;
+import repository.interfaces.CrudRepository;
 import exceptions.DatabaseOperationException;
 import exceptions.ResourceNotFoundException;
 import utils.DatabaseConnection;
@@ -13,12 +14,13 @@ import java.util.List;
 /**
  * Repository for Character CRUD operations using JDBC
  */
-public class CharacterRepository {
+public class CharacterRepository implements CrudRepository<GameEntity>{
 
     /**
      * Create a new character in database
      */
-    public int create(GameEntity character) throws DatabaseOperationException {
+    @Override
+    public int create(GameEntity entity) throws DatabaseOperationException {
         String sqlCharacter = "INSERT INTO characters (name, character_type, level, experience, health_points, guild_id) VALUES (?, ?, ?, ?, ?, ?)";
         String sqlAttributes = "INSERT INTO character_attributes (character_id, strength, armor, weapon_type, mana, intelligence, spell_school, agility, stealth, critical_chance) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -33,10 +35,10 @@ public class CharacterRepository {
 
             // Insert character
             psChar = conn.prepareStatement(sqlCharacter, Statement.RETURN_GENERATED_KEYS);
-            psChar.setString(1, character.getName());
-            psChar.setString(2, character.getCharacterType());
-            psChar.setInt(3, character.getLevel());
-            psChar.setInt(4, character.getExperience());
+            psChar.setString(1, entity.getName());
+            psChar.setString(2, entity.getCharacterType());
+            psChar.setInt(3, entity.getLevel());
+            psChar.setInt(4, entity.getExperience());
             psChar.setInt(5, 100); // Default health
             psChar.setNull(6, Types.INTEGER); // No guild initially
 
@@ -49,15 +51,15 @@ public class CharacterRepository {
             int characterId = 0;
             if (rs.next()) {
                 characterId = rs.getInt(1);
-                character.setId(characterId);
+                entity.setId(characterId);
             }
 
             // Insert character-specific attributes
             psAttr = conn.prepareStatement(sqlAttributes);
             psAttr.setInt(1, characterId);
 
-            if (character instanceof Warrior) {
-                Warrior w = (Warrior) character;
+            if (entity instanceof Warrior) {
+                Warrior w = (Warrior) entity;
                 psAttr.setInt(2, w.getStrength());
                 psAttr.setInt(3, w.getArmor());
                 psAttr.setString(4, w.getWeaponType());
@@ -67,8 +69,8 @@ public class CharacterRepository {
                 psAttr.setNull(8, Types.INTEGER);
                 psAttr.setNull(9, Types.INTEGER);
                 psAttr.setNull(10, Types.DECIMAL);
-            } else if (character instanceof Mage) {
-                Mage m = (Mage) character;
+            } else if (entity instanceof Mage) {
+                Mage m = (Mage) entity;
                 psAttr.setNull(2, Types.INTEGER);
                 psAttr.setNull(3, Types.INTEGER);
                 psAttr.setNull(4, Types.VARCHAR);
@@ -78,8 +80,8 @@ public class CharacterRepository {
                 psAttr.setNull(8, Types.INTEGER);
                 psAttr.setNull(9, Types.INTEGER);
                 psAttr.setNull(10, Types.DECIMAL);
-            } else if (character instanceof Rogue) {
-                Rogue r = (Rogue) character;
+            } else if (entity instanceof Rogue) {
+                Rogue r = (Rogue) entity;
                 psAttr.setNull(2, Types.INTEGER);
                 psAttr.setNull(3, Types.INTEGER);
                 psAttr.setNull(4, Types.VARCHAR);
@@ -114,6 +116,7 @@ public class CharacterRepository {
     /**
      * Get all characters
      */
+    @Override
     public List<GameEntity> getAll() throws DatabaseOperationException {
         String sql = "SELECT c.*, a.* FROM characters c LEFT JOIN character_attributes a ON c.id = a.character_id";
         List<GameEntity> characters = new ArrayList<>();
@@ -144,6 +147,7 @@ public class CharacterRepository {
     /**
      * Get character by ID
      */
+    @Override
     public GameEntity getById(int id) throws DatabaseOperationException, ResourceNotFoundException {
         String sql = "SELECT c.*, a.* FROM characters c LEFT JOIN character_attributes a ON c.id = a.character_id WHERE c.id = ?";
 
@@ -173,7 +177,8 @@ public class CharacterRepository {
     /**
      * Update character
      */
-    public void update(int id, GameEntity character) throws DatabaseOperationException, ResourceNotFoundException {
+    @Override
+    public void update(int id, GameEntity entity) throws DatabaseOperationException, ResourceNotFoundException {
         // First check if exists
         getById(id);
 
@@ -190,17 +195,17 @@ public class CharacterRepository {
 
             // Update character
             psChar = conn.prepareStatement(sqlChar);
-            psChar.setString(1, character.getName());
-            psChar.setInt(2, character.getLevel());
-            psChar.setInt(3, character.getExperience());
+            psChar.setString(1, entity.getName());
+            psChar.setInt(2, entity.getLevel());
+            psChar.setInt(3, entity.getExperience());
             psChar.setInt(4, id);
             psChar.executeUpdate();
 
             // Update attributes
             psAttr = conn.prepareStatement(sqlAttr);
 
-            if (character instanceof Warrior) {
-                Warrior w = (Warrior) character;
+            if (entity instanceof Warrior) {
+                Warrior w = (Warrior) entity;
                 psAttr.setInt(1, w.getStrength());
                 psAttr.setInt(2, w.getArmor());
                 psAttr.setString(3, w.getWeaponType());
@@ -210,8 +215,8 @@ public class CharacterRepository {
                 psAttr.setNull(7, Types.INTEGER);
                 psAttr.setNull(8, Types.INTEGER);
                 psAttr.setNull(9, Types.DECIMAL);
-            } else if (character instanceof Mage) {
-                Mage m = (Mage) character;
+            } else if (entity instanceof Mage) {
+                Mage m = (Mage) entity;
                 psAttr.setNull(1, Types.INTEGER);
                 psAttr.setNull(2, Types.INTEGER);
                 psAttr.setNull(3, Types.VARCHAR);
@@ -221,8 +226,8 @@ public class CharacterRepository {
                 psAttr.setNull(7, Types.INTEGER);
                 psAttr.setNull(8, Types.INTEGER);
                 psAttr.setNull(9, Types.DECIMAL);
-            } else if (character instanceof Rogue) {
-                Rogue r = (Rogue) character;
+            } else if (entity instanceof Rogue) {
+                Rogue r = (Rogue) entity;
                 psAttr.setNull(1, Types.INTEGER);
                 psAttr.setNull(2, Types.INTEGER);
                 psAttr.setNull(3, Types.VARCHAR);
@@ -257,6 +262,7 @@ public class CharacterRepository {
     /**
      * Delete character
      */
+    @Override
     public void delete(int id) throws DatabaseOperationException, ResourceNotFoundException {
         // First check if exists
         getById(id);
