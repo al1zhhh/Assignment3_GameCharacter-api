@@ -91,6 +91,7 @@ public class main {
             System.out.println("-- DEMONSTRATIONS ------------------------");
             System.out.println("| 20. Simulate Combat (Interface Demo)   |");
             System.out.println("| 21. Polymorphism Demonstration         |");
+            System.out.println("| 22. Demonstrate Advanced Features        |");
             System.out.println("------------------------------------------");
             System.out.println("| 0.  Exit Application                   |");
             System.out.println("------------------------------------------");
