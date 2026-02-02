@@ -1,6 +1,7 @@
 package repository;
 
 import model.Guild;
+import repository.interfaces.CrudRepository;
 import exceptions.DatabaseOperationException;
 import exceptions.ResourceNotFoundException;
 import utils.DatabaseConnection;
@@ -13,9 +14,9 @@ import java.util.List;
 /**
  * Repository for Guild CRUD operations
  */
-public class GuildRepository {
-
-    public int create(Guild guild) throws DatabaseOperationException {
+public class GuildRepository implements CrudRepository<Guild>  {
+    @Override
+    public int create(Guild entity) throws DatabaseOperationException {
         String sql = "INSERT INTO guilds (guild_name, level, member_count) VALUES (?, ?, ?)";
 
         Connection conn = null;
@@ -25,9 +26,9 @@ public class GuildRepository {
         try {
             conn = DatabaseConnection.getConnection();
             ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, guild.getGuildName());
-            ps.setInt(2, guild.getLevel());
-            ps.setInt(3, guild.getMemberCount());
+            ps.setString(1, entity.getGuildName());
+            ps.setInt(2, entity.getLevel());
+            ps.setInt(3, entity.getMemberCount());
 
             int affected = ps.executeUpdate();
             if (affected == 0) {
@@ -37,7 +38,7 @@ public class GuildRepository {
             rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 int id = rs.getInt(1);
-                guild.setId(id);
+                entity.setId(id);
                 System.out.println("Guild created successfully with ID: " + id);
                 return id;
             }
