@@ -8,11 +8,6 @@ A console-based Java application demonstrating SOLID principles, advanced OOP fe
 
 This application manages game characters (Warriors, Mages, Rogues) with full CRUD operations, guild system, and character progression. Built using SOLID principles and advanced Java features including generics, lambdas, and reflection.
 
-### Technologies Used
-- **Java 11+** - Core programming language
-- **PostgreSQL** - Relational database
-- **JDBC** - Database connectivity
-- **IntelliJ IDEA** - Development environment
 
 ### Main Features
 - ✅ Create and manage three character types
